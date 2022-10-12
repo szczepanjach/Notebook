@@ -1,0 +1,56 @@
+﻿<EditForm Model="Note" OnValidSubmit="@OnSave">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label class="control-label">Temat</label>
+        <div class="col-12">
+            <InputText class="form-control" @bind-Value="Note.Subject" />
+            <ValidationMessage For="(() => Note.Subject)" />
+            @if(isSubjectInUse){
+                <label class="validation-message">Temat musi być unikalny</label>
+            }
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Treść</label>
+        <div class="col-12">
+            <InputTextArea class="form-control" @bind-Value="Note.Body" />
+            <ValidationMessage For="(() => Note.Body)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Tagi</label>
+        <div class="col-12">
+            <table>
+                @foreach(var tag in Note.Tags){
+                    <tr>
+                        <td>
+                            <p>@tag.TagValue</p>
+                            <ValidationMessage For="(() => tag.TagValue)" />
+                        </td>
+                        <td>
+                            <button class="btn btn-link btn-sm" type="button"
+                                @onclick="() => RemoveTag(tag)">
+                                Usuń
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <ValidationMessage For="(() => Note.Tags)" />
+            @if(isAddingNewTag){
+                <InputText class="form-control" @bind-Value="newTagValue" />
+                <ValidationMessage For="(() => newTagValue)" />
+                <button class="btn btn-link btn-sm" type="button"
+                    @onclick="SaveNewTag">
+                    Zapisz nowy tag
+                </button>
+            }
+            else{
+                <button class="btn btn-link btn-sm" type="button"
+                    @onclick="AddNewTag">Dodaj tag</button>
+            }
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Zapisz</button>
+</EditForm>
+

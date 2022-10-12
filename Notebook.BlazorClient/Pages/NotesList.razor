@@ -1,0 +1,58 @@
+﻿@page "/noteslist"
+
+<PageTitle>Lista notatek</PageTitle>
+
+<h1>Lista notatek</h1>
+
+@if (!isInitailized)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Temat</th>
+                <th>Status</th>
+                <th>Data ostatniej modyfikacji</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var note in notes)
+            {
+                <tr>
+                    <td>@note.Subject</td>
+                    @if (note.IsArchived)
+                    {
+                        <td>Zarchiwizowana</td>
+                    }
+                    else
+                    {
+                        <td>Niezarchiwizowana</td>
+                    }
+                    <td>@note.LastUpdateDate.ToString("dd-MM-yyyy HH:mm:ss")</td>
+                    <td><NavLink href="@GetDetailsLink(note.Id)">Podgląd</NavLink></td>
+                    <td>
+                        @if (!note.IsArchived)
+                        {
+                            <NavLink href="@GetEditLink(note.Id)">Edycja</NavLink>
+                        }
+                    </td>
+                    <td>@if (!note.IsArchived)
+                        {
+                            <button class="btn btn-link" type="button" @onclick="async () => await ArchiveNote(note.Id)">Archiwizuj</button>
+                        }
+                    </td>
+                    <td>
+                        @if (!note.IsArchived)
+                        {
+                            <button class="btn btn-link" type="button" @onclick="async () => await DeleteNote(note.Id)">Usuń</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <NavLink href="createnote">Utwórz nową notatkę</NavLink>
+}

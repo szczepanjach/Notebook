@@ -1,0 +1,16 @@
+﻿@page "/editnote/{noteId:int}"
+<h3>Edycja notatki</h3>
+@if (!isInitailized)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if(note == null){
+        <p>Nie znaleziono notatki</p>
+    }
+    else
+    {
+        <NoteEditControl Note="note" OnNoteSaved="Save" />
+    }
+}

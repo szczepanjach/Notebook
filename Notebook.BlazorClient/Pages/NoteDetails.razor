@@ -1,0 +1,31 @@
+﻿@page "/notedetails/{noteId:int}"
+
+<PageTitle>Podgląd notatki</PageTitle>
+
+<h1>Podgląd notatki</h1>
+
+@if (!isInitailized)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if(note == null){
+        <p>Nie znaleziono notatki do pokazania</p>
+    }
+    else
+    {
+        <p>Temat: @note.Subject</p>
+        <p>Treść: @note.Body</p>
+        <p>Data osatniej edycji: @note.LastUpdateDate.ToString("dd-MM-yyyy HH:mm")</p>
+        if (note.IsArchived)
+        {
+            <p>Status: Zarchiwiozowana </p>
+        }
+        else
+        {
+            <p>Status: Niezarchiwiozowana </p>
+        }
+        <p>Tagi: @string.Join(",", note.Tags.Select(s=>s.TagValue))</p>
+    }
+}
