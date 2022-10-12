@@ -9,7 +9,7 @@ namespace Notebook.IntegrationTestsInfrastructure
     public class TestDatabaseFixture
     {
         private const string CONNECTION_STRING =
-            "Server=localhost;Integrated Security=true;Initial Catalog=notebookIntegrationTest;";
+            "Server=(localdb)\\MSSQLLocalDB;Integrated Security=true;Initial Catalog=notebookIntegrationTest;";
         private static readonly object _lock = new object();
         private static bool _databaseInitialized;
 
